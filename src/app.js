@@ -2,6 +2,7 @@ import express from "express";
 import bodyParser from "body-parser";
 import dotenv from "dotenv";
 import userRoutes from "./routes/UserRoutes";
+import authRoute from "./routes/Auth";
 
 dotenv.config();
 
@@ -11,6 +12,7 @@ app.use(bodyParser.json());
 
 //Project_11 (API)
 app.use("/api/users", userRoutes);
+app.use("/api/auth", authRoute);
 
 app.get("/", (req, res) => {
   return res.status(200).send({
