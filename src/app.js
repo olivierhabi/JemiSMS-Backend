@@ -1,12 +1,16 @@
 import express from "express";
 import bodyParser from "body-parser";
 import dotenv from "dotenv";
+import userRoutes from "./routes/UserRoutes";
 
 dotenv.config();
 
 const app = express();
 app.use(express.json());
 app.use(bodyParser.json());
+
+//Project_11 (API)
+app.use("/api/users", userRoutes);
 
 app.get("/", (req, res) => {
   return res.status(200).send({
