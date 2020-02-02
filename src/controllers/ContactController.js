@@ -41,6 +41,33 @@ class ContactController {
       console.log(e);
     }
   }
+  static async deleteMyContact(req, res) {
+    const { id } = req.params;
+    const userId = req.user.id;
+
+    try {
+      const contact = await ContactService.getOneContact(id);
+
+      if (!contact) {
+        return res.status(404).send({
+          status: 404,
+          message: "Contact not found"
+        });
+      }
+      if (contact.dataValues.userId !== userId) {
+        return res.status(404).send({
+          status: 404,
+          message: "You can only delete your contact"
+        });
+      }
+
+      const dataDelete = await ContactService.deleteContact(id);
+      return res.status(200).send({
+        status: 200,
+        message: "Contact deleted"
+      });
+    } catch (error) {}
+  }
 }
 
 export default ContactController;

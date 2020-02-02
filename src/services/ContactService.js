@@ -25,6 +25,28 @@ class ContactService {
       throw error;
     }
   }
+  static async deleteContact(id, next) {
+    try {
+      return await database.Contact.destroy({
+        where: {
+          id: id
+        }
+      });
+    } catch (error) {
+      throw error;
+    }
+  }
+  static async getOneContact(id, next) {
+    try {
+      return await database.Contact.findOne({
+        where: {
+          id: id
+        }
+      });
+    } catch (error) {
+      throw error;
+    }
+  }
 }
 
 export default ContactService;

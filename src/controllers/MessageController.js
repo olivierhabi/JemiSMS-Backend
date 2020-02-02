@@ -84,7 +84,7 @@ class MessageController {
           message: "You can only delete message you sent"
         });
       }
-      console.log(message.dataValues.userId);
+      // console.log(message.dataValues.userId);
       const dataDelete = await MessageService.deleteMessage(id);
       return res.status(200).send({
         status: 200,
