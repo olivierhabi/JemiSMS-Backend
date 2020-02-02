@@ -33,8 +33,8 @@ class ContactController {
     try {
       const contactData = await ContactService.getContact(id);
       return res.status(200).send({
-        status: 202,
-        message: "Contact of the user",
+        status: 200,
+        message: "My Contact",
         contactData
       });
     } catch (e) {

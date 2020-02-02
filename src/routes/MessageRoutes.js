@@ -9,5 +9,5 @@ const router = Router();
 
 router.post("/", Auth, validate, MessageController.AddMessage);
 router.get("/", Auth, MessageController.getMyMessage);
-
+router.delete("/:id", Auth, MessageController.deleteMyMessage);
 export default router;

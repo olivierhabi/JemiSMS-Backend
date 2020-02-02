@@ -25,6 +25,30 @@ class MessageService {
       throw error;
     }
   }
+
+  static async getOneMessage(id, next) {
+    try {
+      return await database.Message.findOne({
+        where: {
+          id: id
+        }
+      });
+    } catch (error) {
+      throw error;
+    }
+  }
+
+  static async deleteMessage(id, next) {
+    try {
+      return await database.Message.destroy({
+        where: {
+          id: id
+        }
+      });
+    } catch (error) {
+      throw error;
+    }
+  }
 }
 
 export default MessageService;
