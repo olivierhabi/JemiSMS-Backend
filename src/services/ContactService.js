@@ -47,6 +47,20 @@ class ContactService {
       throw error;
     }
   }
+  static async updateContact(contactData, next) {
+    const { name, phone, contactId } = contactData;
+    try {
+      return await database.Contact.update(
+        {
+          name: name,
+          phone: phone
+        },
+        { where: { id: contactId }, returning: true }
+      );
+    } catch (error) {
+      throw error;
+    }
+  }
 }
 
 export default ContactService;

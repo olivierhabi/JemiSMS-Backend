@@ -10,5 +10,6 @@ const router = Router();
 router.post("/", Auth, validate, ContactController.AddContact);
 router.get("/", Auth, ContactController.getMyContact);
 router.delete("/:id", Auth, ContactController.deleteMyContact);
+router.patch("/:id", Auth, ContactController.updateMyContact);
 
 export default router;

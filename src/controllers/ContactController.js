@@ -23,7 +23,9 @@ class ContactController {
         data
       });
     } catch (error) {
-      console.log(error);
+      return res
+        .status(400)
+        .send({ status: 400, message: e.errors[0].message });
     }
   }
 
@@ -38,7 +40,9 @@ class ContactController {
         contactData
       });
     } catch (e) {
-      console.log(e);
+      return res
+        .status(400)
+        .send({ status: 400, message: e.errors[0].message });
     }
   }
   static async deleteMyContact(req, res) {
@@ -65,6 +69,44 @@ class ContactController {
       return res.status(200).send({
         status: 200,
         message: "Contact deleted"
+      });
+    } catch (error) {
+      return res
+        .status(400)
+        .send({ status: 400, message: e.errors[0].message });
+    }
+  }
+  static async updateMyContact(req, res) {
+    const { name, phone } = req.body;
+    const { id } = req.user;
+    const contactId = req.params.id;
+    console.log(name, phone, id, contactId);
+    try {
+      const contact = await ContactService.getOneContact(contactId);
+
+      if (!contact) {
+        return res.status(404).send({
+          status: 404,
+          message: "Contact not found"
+        });
+      }
+
+      if (contact.dataValues.userId !== id) {
+        return res.status(404).send({
+          status: 404,
+          message: "You can only update your contact"
+        });
+      }
+      const dataUpdate = await ContactService.updateContact({
+        name,
+        phone,
+        contactId
+      });
+
+      return res.status(200).send({
+        status: 200,
+        message: "Contact Updated",
+        data: dataUpdate[1][0]
       });
     } catch (error) {}
   }
