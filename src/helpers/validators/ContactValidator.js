@@ -7,8 +7,7 @@ const validateContact = {
       name: Joi.string()
         .trim()
         .min(3)
-        .max(50)
-        .required(),
+        .max(50),
       phone: Joi.string()
         .trim()
         .min(10)

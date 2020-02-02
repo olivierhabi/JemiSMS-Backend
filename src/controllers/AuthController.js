@@ -29,6 +29,7 @@ class AuthController {
           .send({ status: 400, message: "Invalid password or password" });
       }
       const data = await token({
+        id: user.dataValues.id,
         username: user.dataValues.username,
         email: user.dataValues.email,
         phone: user.dataValues.phone

@@ -9,37 +9,36 @@ class ContactController {
    */
   static async AddContact(req, res) {
     const { name, phone } = req.body;
+    const { id } = req.user;
 
     try {
-      const createContact = await ContactService.addContact({
+      const data = await ContactService.addContact({
         name,
-        phone
+        phone,
+        id
       });
-
       return res.status(201).send({
         status: 201,
         message: "Create contact successfull",
-        createContact
+        data
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
+  static async getMyContact(req, res) {
+    const { id } = req.user;
+    console.log(id);
+    try {
+      const contactData = await ContactService.getContact(id);
+      return res.status(200).send({
+        status: 202,
+        message: "Contact of the user",
+        contactData
       });
     } catch (e) {
       console.log(e);
-      //   if (e.name === "SequelizeUniqueConstraintError") {
-      //     const { message } = e.errors[0];
-      //     let errorMessage = message;
-      //     if (message === "email must be unique") {
-      //       errorMessage = "The email is already taken";
-      //     }
-      //     if (message === "username must be unique") {
-      //       errorMessage = "The username is already taken";
-      //     }
-      //     if (message === "phone must be unique") {
-      //       errorMessage = "The phone number is already taken";
-      //     }
-      //     return res.status(400).send({ status: 400, message: errorMessage });
-      //   }
-      //   return res
-      //     .status(500)
-      //     .send({ status: 500, message: "INTERNAL_SERVER ERROR" });
     }
   }
 }

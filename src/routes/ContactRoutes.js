@@ -8,5 +8,6 @@ const { validate } = ContactValidator;
 const router = Router();
 
 router.post("/", Auth, validate, ContactController.AddContact);
+router.get("/", Auth, ContactController.getMyContact);
 
 export default router;

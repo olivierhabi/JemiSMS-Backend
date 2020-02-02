@@ -5,6 +5,7 @@ import userRoutes from "./routes/UserRoutes";
 import authRoute from "./routes/AuthRoutes";
 import accountRoute from "./routes/AccountRoute";
 import contactRoute from "./routes/ContactRoutes";
+import models from "./models";
 
 dotenv.config();
 
@@ -34,8 +35,14 @@ app.get("/", (req, res) => {
   });
 });
 
-app.listen(process.env.PORT, () =>
-  console.log(`Listening on port ${process.env.PORT}`)
-);
+models.sequelize
+  .sync({
+    force: false
+  })
+  .then(() =>
+    app.listen(process.env.PORT, () =>
+      console.log(`Listening on port ${process.env.PORT}`)
+    )
+  );
 
 export default app;
