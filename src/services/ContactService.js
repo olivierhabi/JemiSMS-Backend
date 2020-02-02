@@ -7,8 +7,7 @@ class ContactService {
       return await database.Contact.create({
         name: name,
         phone: phone,
-        userId: id,
-        UserId: id
+        userId: id
       });
     } catch (error) {
       throw error;
