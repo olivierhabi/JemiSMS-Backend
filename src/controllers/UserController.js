@@ -43,6 +43,7 @@ class UserController {
         }
         return res.status(400).send({ status: 400, message: errorMessage });
       }
+      console.log(e);
       return res
         .status(500)
         .send({ status: 500, message: "INTERNAL_SERVER ERROR" });

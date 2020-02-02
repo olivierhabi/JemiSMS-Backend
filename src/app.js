@@ -2,7 +2,10 @@ import express from "express";
 import bodyParser from "body-parser";
 import dotenv from "dotenv";
 import userRoutes from "./routes/UserRoutes";
-import authRoute from "./routes/Auth";
+import authRoute from "./routes/AuthRoutes";
+import accountRoute from "./routes/AccountRoute";
+import contactRoute from "./routes/ContactRoutes";
+import models from "./models";
 
 dotenv.config();
 
@@ -10,9 +13,20 @@ const app = express();
 app.use(express.json());
 app.use(bodyParser.json());
 
+app.use(function(req, res, next) {
+  res.header("Access-Control-Allow-Origin", "http://localhost:3000"); // update to match the domain you will make the request from
+  res.header(
+    "Access-Control-Allow-Headers",
+    "Origin, X-Requested-With, Content-Type, Accept, authorization"
+  );
+  next();
+});
+
 //Project_11 (API)
 app.use("/api/users", userRoutes);
 app.use("/api/auth", authRoute);
+app.use("/api/account", accountRoute);
+app.use("/api/contact", contactRoute);
 
 app.get("/", (req, res) => {
   return res.status(200).send({
@@ -21,8 +35,14 @@ app.get("/", (req, res) => {
   });
 });
 
-app.listen(process.env.PORT, () =>
-  console.log(`Listening on port ${process.env.PORT}`)
-);
+models.sequelize
+  .sync({
+    force: false
+  })
+  .then(() =>
+    app.listen(process.env.PORT, () =>
+      console.log(`Listening on port ${process.env.PORT}`)
+    )
+  );
 
 export default app;
