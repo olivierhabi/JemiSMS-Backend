@@ -5,6 +5,8 @@ import userRoutes from "./routes/UserRoutes";
 import authRoute from "./routes/AuthRoutes";
 import accountRoute from "./routes/AccountRoute";
 import contactRoute from "./routes/ContactRoutes";
+import messageRoute from "./routes/MessageRoutes";
+
 import models from "./models";
 
 dotenv.config();
@@ -27,6 +29,7 @@ app.use("/api/users", userRoutes);
 app.use("/api/auth", authRoute);
 app.use("/api/account", accountRoute);
 app.use("/api/contact", contactRoute);
+app.use("/api/message", messageRoute);
 
 app.get("/", (req, res) => {
   return res.status(200).send({
