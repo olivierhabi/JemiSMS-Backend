@@ -2,10 +2,11 @@ import database from "../models";
 
 class MessageService {
   static async addMessage(newMessage, next) {
-    const { phone, message, id } = newMessage;
+    const { phone, sender, message, id } = newMessage;
     try {
       return await database.Message.create({
         phone: phone,
+        sender: sender,
         message: message,
         userId: id
       });

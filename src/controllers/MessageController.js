@@ -8,13 +8,14 @@ class MessageController {
    * @return {object} message object
    */
   static async AddMessage(req, res) {
-    const { phone, message } = req.body;
-    console.log(phone, message);
+    const { phone, sender, message } = req.body;
+    // console.log(phone, sender, message);
     const { id } = req.user;
 
     try {
       const dataMessage = await MessageService.addMessage({
         phone,
+        sender,
         message,
         id
       });
