@@ -6,12 +6,14 @@ import authRoute from "./routes/AuthRoutes";
 import accountRoute from "./routes/AccountRoute";
 import contactRoute from "./routes/ContactRoutes";
 import messageRoute from "./routes/MessageRoutes";
+import cors from "cors";
 
 import models from "./models";
 
 dotenv.config();
 
 const app = express();
+app.use(cors());
 app.use(express.json());
 app.use(bodyParser.json());
 

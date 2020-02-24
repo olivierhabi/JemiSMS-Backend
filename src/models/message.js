@@ -4,6 +4,7 @@ module.exports = (sequelize, DataTypes) => {
     "Message",
     {
       phone: DataTypes.STRING,
+      sender: DataTypes.STRING,
       message: DataTypes.STRING
     },
     {}

@@ -26,7 +26,7 @@ class AuthController {
       if (!validPassword) {
         return res
           .status(400)
-          .send({ status: 400, message: "Invalid password or password" });
+          .send({ status: 400, message: "Invalid email or password" });
       }
       const data = await token({
         id: user.dataValues.id,
