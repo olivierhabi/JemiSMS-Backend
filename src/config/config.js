@@ -1,18 +1,18 @@
 require("dotenv").config();
 
 module.exports = {
-  // If using onine database
-  // development: {
-  //   use_env_variable: 'DATABASE_URL'
-  // },
-
   development: {
-    database: "project11",
-    username: "olivier",
-    password: 1234,
-    host: "127.0.0.1",
+    use_env_variable: "DATABASE_URL",
     dialect: "postgres"
   },
+
+  // development: {
+  //   database: "project11",
+  //   username: "olivier",
+  //   password: 1234,
+  //   host: "127.0.0.1",
+  //   dialect: "postgres"
+  // },
 
   test: {
     database: "project11",
