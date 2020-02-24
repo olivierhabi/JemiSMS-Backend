@@ -1,6 +1,6 @@
 import bcrypt from "bcryptjs";
 import "@babel/polyfill";
-import token from "../helpers/gentoken";
+import token from "../helpers/genToken";
 import AuthService from "../services/AuthService";
 
 class AuthController {
