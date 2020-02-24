@@ -18,10 +18,7 @@ app.use(express.json());
 app.use(bodyParser.json());
 
 app.use(function(req, res, next) {
-  res.header(
-    "Access-Control-Allow-Origin",
-    "https://gambino-backend.herokuapp.com/signin"
-  ); // update to match the domain you will make the request from
+  res.header("Access-Control-Allow-Origin", "gambino-backend.herokuapp.com"); // update to match the domain you will make the request from
   res.header(
     "Access-Control-Allow-Headers",
     "Origin, X-Requested-With, Content-Type, Accept, authorization"
