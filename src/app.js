@@ -6,6 +6,7 @@ import authRoute from "./routes/AuthRoutes";
 import accountRoute from "./routes/AccountRoute";
 import contactRoute from "./routes/ContactRoutes";
 import messageRoute from "./routes/MessageRoutes";
+import paymentReqRoute from "./routes/PaymentReqRoute";
 import cors from "cors";
 
 import models from "./models";
@@ -17,21 +18,13 @@ app.use(cors());
 app.use(express.json());
 app.use(bodyParser.json());
 
-// app.use(function(req, res, next) {
-//   res.header("Access-Control-Allow-Origin", "http://localhost:3000"); // update to match the domain you will make the request from
-//   res.header(
-//     "Access-Control-Allow-Headers",
-//     "Origin, X-Requested-With, Content-Type, Accept, authorization"
-//   );
-//   next();
-// });
-
 //Project_11 (API)
 app.use("/api/users", userRoutes);
 app.use("/api/auth", authRoute);
 app.use("/api/account", accountRoute);
 app.use("/api/contact", contactRoute);
 app.use("/api/message", messageRoute);
+app.use("/api/pay", paymentReqRoute);
 
 app.get("/", (req, res) => {
   return res.status(200).send({
