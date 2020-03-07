@@ -12,7 +12,6 @@ class MessageController {
   static async AddMessage(req, res) {
     const { phone: recipients, sender, message } = req.body;
     const { id } = req.user;
-    // console.log(recipients, sender, message, id);
     try {
       function runScript() {
         return spawn("python", [

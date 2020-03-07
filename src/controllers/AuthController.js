@@ -32,7 +32,8 @@ class AuthController {
         id: user.dataValues.id,
         username: user.dataValues.username,
         email: user.dataValues.email,
-        phone: user.dataValues.phone
+        phone: user.dataValues.phone,
+        admin: user.dataValues.admin
       });
 
       return res.status(200).send({
