@@ -21,6 +21,11 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.STRING,
         allowNull: false,
         unique: true
+      },
+      admin: {
+        type: DataTypes.STRING,
+        allowNull: false,
+        unique: false
       }
     },
     {}

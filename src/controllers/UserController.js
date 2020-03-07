@@ -1,7 +1,7 @@
 import UserService from "../services/UserService";
 import genToken from "../helpers/genToken";
 import hashPassword from "../helpers/hashPassword";
-import BalanceController from "../controllers/BalanceController";
+import BalanceService from "../services/BalanceService";
 
 class UserController {
   /**
@@ -12,25 +12,30 @@ class UserController {
    */
   static async AddUser(req, res) {
     const { username, email, password, phone } = req.body;
-
+    const admin = false;
     const hashedPassword = await hashPassword(password);
     try {
       const createUser = await UserService.addUser({
         username,
         email,
         password: hashedPassword,
-        phone
+        phone,
+        admin
+      }).then(async user => {
+        await BalanceService.addBalance({
+          balance: 0,
+          id: user.dataValues.id
+        });
+        return user;
       });
 
-      const token = genToken({ username, email, phone });
-
-      BalanceController.AddBalance();
+      const token = genToken({ username, email, phone, admin });
 
       return res.status(201).send({
         status: 201,
         message: "Signup successfull",
         token: token,
-        createUser
+        data: createUser
       });
     } catch (e) {
       if (e.name === "SequelizeUniqueConstraintError") {

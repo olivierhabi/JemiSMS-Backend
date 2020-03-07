@@ -8,11 +8,13 @@ import contactRoute from "./routes/ContactRoutes";
 import messageRoute from "./routes/MessageRoutes";
 import paymentReqRoute from "./routes/PaymentReqRoute";
 import balanceRoutes from "./routes/BalanceRoutes";
+import createAdmin from "./controllers/CreateAdministrator";
 import cors from "cors";
 
 import models from "./models";
 
 dotenv.config();
+createAdmin();
 
 const app = express();
 app.use(cors());
