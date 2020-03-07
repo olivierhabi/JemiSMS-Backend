@@ -47,6 +47,8 @@
     "path": "^0.12.7",
     "pg": "^7.18.1",
     "pg-hstore": "^2.3.3",
+    "python-bridge": "^1.1.0",
+    "python-shell": "^1.0.8",
     "request": "^2.88.2",
     "sequelize": "4.42.0",
     "uuid": "^7.0.0",

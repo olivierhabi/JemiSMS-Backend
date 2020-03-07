@@ -1,6 +1,7 @@
 import UserService from "../services/UserService";
 import genToken from "../helpers/genToken";
 import hashPassword from "../helpers/hashPassword";
+import BalanceController from "../controllers/BalanceController";
 
 class UserController {
   /**
@@ -22,6 +23,9 @@ class UserController {
       });
 
       const token = genToken({ username, email, phone });
+
+      BalanceController.AddBalance();
+
       return res.status(201).send({
         status: 201,
         message: "Signup successfull",
