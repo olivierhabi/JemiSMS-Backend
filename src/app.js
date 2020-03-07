@@ -7,6 +7,7 @@ import accountRoute from "./routes/AccountRoute";
 import contactRoute from "./routes/ContactRoutes";
 import messageRoute from "./routes/MessageRoutes";
 import paymentReqRoute from "./routes/PaymentReqRoute";
+import balanceRoutes from "./routes/BalanceRoutes";
 import cors from "cors";
 
 import models from "./models";
@@ -25,8 +26,10 @@ app.use("/api/account", accountRoute);
 app.use("/api/contact", contactRoute);
 app.use("/api/message", messageRoute);
 app.use("/api/pay", paymentReqRoute);
+app.use("/api/balance", balanceRoutes);
 
 app.get("/", (req, res) => {
+  console.log({ message: "Welcome PROJECT_11-API" });
   return res.status(200).send({
     status: 200,
     message: "Welcome PROJECT_11-API"
