@@ -98,7 +98,7 @@ class BalanceController {
           message: "Please login to you reduce your Balance "
         });
       }
-      console.log(userId.dataValues.userId, id);
+
       if (userId.dataValues.userId !== id) {
         return res.status(400).send({
           status: 400,
