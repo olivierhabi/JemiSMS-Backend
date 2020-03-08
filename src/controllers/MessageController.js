@@ -1,6 +1,7 @@
 import MessageService from "../services/MessageService";
 import path from "path";
 import { spawn } from "child_process";
+import BalanceService from "../services/BalanceService";
 
 class MessageController {
   /**
@@ -13,6 +14,13 @@ class MessageController {
     const { phone: recipients, sender, message } = req.body;
     const { id } = req.user;
     try {
+      const amount = await BalanceService.getOneBalance(id);
+      if (amount.balance < 0) {
+        return res.status(400).send({
+          status: 400,
+          message: "You don't have enough balance"
+        });
+      }
       function runScript() {
         return spawn("python", [
           path.join(__dirname, "../python-req/request.py"),
@@ -23,69 +31,48 @@ class MessageController {
       }
       const subprocess = runScript();
       subprocess.stdout.on("data", async data => {
-        // console.log(`data:${data}`);
         var decod = JSON.parse(data);
         if (decod.success) {
-          console.log(decod);
           const msg = decod.details[0].message;
-          const cost = decod.details[0].cost;
           const status = decod.details[0].status;
           const receipient = decod.details[0].receipient;
-          const balance = decod.summary.balance;
+          const cost = decod.details[0].status === "Q" ? "16" : "0";
           const dataMessage = await MessageService.addMessage({
-            balance,
             cost,
             status,
             receipient,
             sender,
             msg,
             id
+          }).then(async data => {
+            if (data.dataValues.status === "E") {
+              return data;
+            }
+            const id = data.dataValues.userId;
+            const amount = 1;
+
+            await BalanceService.decBalance({
+              amount,
+              id
+            });
+            return data;
           });
+          const balance = await BalanceService.getOneBalance(id).then(data => {
+            console.log(data.balance);
+            return data.balance;
+          });
+
           return res.status(200).send({
             status: 200,
             message: "Message sent",
+            balance: balance,
             dataMessage
           });
         }
-        // res.send({ data: decod.success });
       });
     } catch (error) {
       console.log(error);
     }
-    // try {
-    //   var spawn = require("child_process").spawn;
-    //   var process = spawn("python", [
-    //     "../python-req/request.py",
-    //     phone,
-    //     sender,
-    //     message
-    //   ]);
-    //   console.log(phone, sender, message);
-    //   process.stdout.on("data", function(data) {
-    //     // var decod = JSON.parse(data);
-    //     // console.log(decod.response[0].errors.action);
-    //     // res.send(decod.response[0].errors);
-    //     return res.send(data);
-    //   });
-    //   // const dataMessage = await MessageService.addMessage({
-    //   //   phone,
-    //   //   sender,
-    //   //   message,
-    //   //   id
-    //   // });
-    //   // return res.status(200).send({
-    //   //   status: 200,
-    //   //   message: "Message sent",
-    //   //   dataMessage
-    //   // });
-    // } catch (e) {
-    //   console.log(e);
-    //   // console.log(e.errors[0].message);
-    //   return;
-    //   // res
-    //   //   .status(400)
-    //   //   .send({ status: 400, message: e.errors[0].message });
-    // }
   }
   /**
    *

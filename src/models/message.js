@@ -7,8 +7,7 @@ module.exports = (sequelize, DataTypes) => {
       sender: DataTypes.STRING,
       message: DataTypes.STRING,
       cost: DataTypes.STRING,
-      status: DataTypes.STRING,
-      balance: DataTypes.STRING
+      status: DataTypes.STRING
     },
     {}
   );
