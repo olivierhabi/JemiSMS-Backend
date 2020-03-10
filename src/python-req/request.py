@@ -9,8 +9,8 @@ def jprint(obj):
     print(text)
 
 
-username = "walter12"
-password = "Olivier0?"
+username = sys.argv[4]
+password = sys.argv[5]
 
 
 data = {

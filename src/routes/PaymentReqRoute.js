@@ -1,10 +1,11 @@
 import { Router } from "express";
 import PaymentReqController from "../controllers/PaymentReqController";
+import PaymentValidator from "../helpers/validators/PaymentValidator";
+
+const { validate } = PaymentValidator;
 
 const router = Router();
 
-router.post("/", PaymentReqController.ReqPayment);
-router.post("/res", PaymentReqController.ReqResponse);
-router.post("/test", PaymentReqController.ReqTest);
+router.post("/", validate, PaymentReqController.ReqPayment);
 
 export default router;

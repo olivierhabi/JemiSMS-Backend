@@ -2,6 +2,9 @@ import MessageService from "../services/MessageService";
 import path from "path";
 import { spawn } from "child_process";
 import BalanceService from "../services/BalanceService";
+import dotenv from "dotenv";
+
+dotenv.config();
 
 class MessageController {
   /**
@@ -13,6 +16,8 @@ class MessageController {
   static async AddMessage(req, res) {
     const { phone: recipients, sender, message } = req.body;
     const { id } = req.user;
+    const userName = process.env.USERNAMESMS;
+    const passWord = process.env.PASSWORDSMS;
     try {
       const amount = await BalanceService.getOneBalance(id);
       if (amount.balance < 0) {
@@ -26,7 +31,9 @@ class MessageController {
           path.join(__dirname, "../python-req/request.py"),
           recipients,
           message,
-          sender
+          sender,
+          userName,
+          passWord
         ]);
       }
       const subprocess = runScript();
