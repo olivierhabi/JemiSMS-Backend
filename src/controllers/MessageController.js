@@ -3,6 +3,7 @@ import path from "path";
 import { spawn } from "child_process";
 import BalanceService from "../services/BalanceService";
 import dotenv from "dotenv";
+import HistoryService from "../services/HistoryService";
 
 dotenv.config();
 
@@ -15,7 +16,7 @@ class MessageController {
    */
   static async AddMessage(req, res) {
     const { phone: recipients, sender, message } = req.body;
-    const { id } = req.user;
+    const { id, username } = req.user;
     const userName = process.env.USERNAMESMS;
     const passWord = process.env.PASSWORDSMS;
     try {
@@ -58,16 +59,37 @@ class MessageController {
             msg,
             id
           }).then(async data => {
+            const transaction = "Sent SMS";
+            const customer = username;
+            const id = data.dataValues.userId;
+            const smsQuantity = 1;
+
             if (data.dataValues.status === "E") {
+              const amountHistory = 0;
+              await HistoryService.addHistory({
+                transaction,
+                customer,
+                amountHistory,
+                smsQuantity,
+                id
+              });
               return data;
             }
-            const id = data.dataValues.userId;
+            const amountHistory = 16;
             const amount = 1;
 
             await BalanceService.decBalance({
               amount,
               id
             });
+            await HistoryService.addHistory({
+              transaction,
+              customer,
+              amountHistory,
+              smsQuantity,
+              id
+            });
+
             return data;
           });
           const balance = await BalanceService.getOneBalance(id).then(data => {

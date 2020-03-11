@@ -1,5 +1,6 @@
 import dotenv from "dotenv";
 import BalanceService from "../services/BalanceService";
+import HistoryService from "../services/HistoryService";
 
 dotenv.config();
 
@@ -40,8 +41,9 @@ class BalanceController {
    * @return {object} object
    */
   static async AddBalance(req, res) {
-    const { id } = req.user;
+    const { id, username } = req.user;
     const { balance } = req.body;
+    const smsAmount = balance / 16;
     try {
       const userId = await BalanceService.getOneBalance(id);
 
@@ -59,9 +61,19 @@ class BalanceController {
       }
 
       const balanceData = await BalanceService.incBalance({
-        balance: balance,
+        balance: smsAmount,
         id: id
-      }).then(() => {
+      }).then(async () => {
+        const transaction = "Buy SMS";
+        const customer = username;
+
+        await HistoryService.addHistory({
+          transaction,
+          customer,
+          amountHistory: balance,
+          smsQuantity: smsAmount,
+          id
+        });
         return balance;
       });
       const amount = await BalanceService.getOneBalance(id).then(balance => {
