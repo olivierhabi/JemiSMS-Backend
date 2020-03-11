@@ -16,7 +16,7 @@ const validateMessage = {
         .required(),
       message: Joi.string()
         .trim()
-        .min(10)
+        .min(3)
         .max(255)
         .required()
     });
