@@ -21,7 +21,7 @@ class MessageController {
     const passWord = process.env.PASSWORDSMS;
     try {
       const amount = await BalanceService.getOneBalance(id);
-      if (amount.balance < 0) {
+      if (amount.balance <= 0) {
         return res.status(400).send({
           status: 400,
           message: "You don't have enough balance"
