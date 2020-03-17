@@ -31,7 +31,6 @@ class ContactController {
 
   static async getMyContact(req, res) {
     const { id } = req.user;
-    console.log(id);
     try {
       const contactData = await ContactService.getContact(id);
       return res.status(200).send({
@@ -80,7 +79,6 @@ class ContactController {
     const { name, phone } = req.body;
     const { id } = req.user;
     const contactId = req.params.id;
-    console.log(name, phone, id, contactId);
     try {
       const contact = await ContactService.getOneContact(contactId);
 

@@ -1,24 +1,22 @@
 import Joi from "joi";
 import "@babel/polyfill";
 
-const validateMessage = {
-  async validate(req, res, next) {
+const validateUser = {
+  async validateUpdate(req, res, next) {
     const schema = Joi.object().keys({
-      phone: Joi.string()
+      email: Joi.string()
         .trim()
         .min(3)
-        .max(50)
-        .required(),
-      sender: Joi.string()
+        .max(255)
+        .email(),
+      password: Joi.string()
         .trim()
-        .min(3)
-        .max(50)
-        .required(),
-      message: Joi.string()
+        .min(6)
+        .max(255),
+      newPassword: Joi.string()
         .trim()
-        .min(3)
-        .max(1024)
-        .required()
+        .min(6)
+        .max(255)
     });
     const { value, error } = Joi.validate(req.body, schema);
     if (error && error.details) {
@@ -30,4 +28,4 @@ const validateMessage = {
   }
 };
 
-export default validateMessage;
+export default validateUser;
