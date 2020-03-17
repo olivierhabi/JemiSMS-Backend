@@ -1,4 +1,5 @@
 import UserService from "../services/UserService";
+import bcrypt from "bcryptjs";
 import genToken from "../helpers/genToken";
 import hashPassword from "../helpers/hashPassword";
 import BalanceService from "../services/BalanceService";
@@ -56,6 +57,73 @@ class UserController {
       return res
         .status(500)
         .send({ status: 500, message: "INTERNAL_SERVER ERROR" });
+    }
+  }
+  /**
+   *
+   * @param {object} req
+   * @param {object} res
+   * @return {object} user object
+   */
+
+  static async GetUser(req, res) {
+    const { id } = req.user;
+
+    try {
+      const user = await UserService.getUser(id);
+      if (!user) {
+        return res.status(404).send({
+          status: 404,
+          message: "User not found"
+        });
+      }
+      return res.status(200).send({ status: 200, data: user.dataValues });
+    } catch (error) {
+      console.log(error);
+    }
+  }
+  /**
+   *
+   * @param {object} req
+   * @param {object} res
+   * @return {object} user object
+   */
+
+  static async UpdateMyAccount(req, res) {
+    const { email, password, newPassword } = req.body;
+    const { id } = req.user;
+    const hashedPassword = await hashPassword(newPassword);
+
+    try {
+      const user = await UserService.getUser(id);
+      if (!user) {
+        return res.status(404).send({
+          status: 404,
+          message: "User not found"
+        });
+      }
+      const currentPassword = user.dataValues.password;
+      const validPassword = await bcrypt.compare(password, currentPassword);
+      if (!validPassword) {
+        return res
+          .status(400)
+          .send({ status: 400, message: "Invalid password" });
+      }
+      const dataUpdate = await UserService.updateUser({
+        email,
+        newPassword: hashedPassword,
+        id
+      });
+      console.log(dataUpdate.dataValues);
+      return res.status(200).send({
+        status: 200,
+        message: "User Updated",
+        data: "data"
+      });
+
+      // console.log(password);
+    } catch (error) {
+      console.log(error);
     }
   }
 }
