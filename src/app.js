@@ -9,6 +9,7 @@ import messageRoute from "./routes/MessageRoutes";
 import paymentReqRoute from "./routes/PaymentReqRoute";
 import balanceRoutes from "./routes/BalanceRoutes";
 import historyRoutes from "./routes/HistoryRoutes";
+import scheduleRoutes from "./routes/ScheduleRoutes";
 import createAdmin from "./controllers/CreateAdministrator";
 import cors from "cors";
 
@@ -31,6 +32,7 @@ app.use("/api/message", messageRoute);
 app.use("/api/pay", paymentReqRoute);
 app.use("/api/balance", balanceRoutes);
 app.use("/api/history", historyRoutes);
+app.use("/api/schedule", scheduleRoutes);
 
 app.get("/", (req, res) => {
   console.log({ message: "Welcome PROJECT_11-API" });
