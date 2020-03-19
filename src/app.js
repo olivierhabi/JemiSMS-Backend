@@ -32,7 +32,7 @@ app.use("/api/message", messageRoute);
 app.use("/api/pay", paymentReqRoute);
 app.use("/api/balance", balanceRoutes);
 app.use("/api/history", historyRoutes);
-app.use("/api/schedule", scheduleRoutes);
+// app.use("/api/schedule", scheduleRoutes);
 
 app.get("/", (req, res) => {
   console.log({ message: "Welcome PROJECT_11-API" });
