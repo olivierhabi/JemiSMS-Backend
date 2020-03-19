@@ -7,6 +7,9 @@ import BalanceService from "../services/BalanceService";
 import dotenv from "dotenv";
 import HistoryService from "../services/HistoryService";
 import redis from "redis";
+import { v4 as uuidv4 } from "uuid";
+import ScheduleService from "../services/ScheduleService";
+
 const client = redis.createClient();
 
 dotenv.config();
@@ -23,6 +26,7 @@ class ContactController {
     const { id, username } = req.user;
     const userName = process.env.USERNAMESMS;
     const passWord = process.env.PASSWORDSMS;
+    const uuid = uuidv4();
 
     const nowDate = new Date(moment().format());
     var scheduleTime = new Date(time);
@@ -42,7 +46,9 @@ class ContactController {
       recipients: recipients,
       sender: sender,
       message: message,
-      id: id
+      id: id,
+      uuid: uuid,
+      time: time
     };
     const options = {
       delay: duration, // in ms
@@ -52,15 +58,33 @@ class ContactController {
     // Adding a SMS to the Queue
     sendSmsQueue.add(data, options);
 
+    // .then(async x => {
+    //   const { title, recipients, sender, message, id, uuid } = x.data;
+    //   const status = "Queued";
+
+    //   const schedule = await ScheduleService.addSchedule({
+    //     uuid,
+    //     title,
+    //     recipients,
+    //     sender,
+    //     message,
+    //     time,
+    //     status,
+    //     id
+    //   });
+    //   // console.log(schedule.dataValues);
+    //   // console.log(x.data);
+    // });
+
     sendSmsQueue.process(async job => {
       return await sendSms(job);
     });
 
     async function sendSms(sms) {
-      const { title, recipients, sender, message, id } = sms.data;
-      //   console.log(sms.data);
+      const { title, recipients, sender, message, id, uuid } = sms.data;
+      // console.log(uuid);
 
-      //   console.log(title, recipients, sender, message);
+      console.log(title, recipients, sender, message);
 
       try {
         const amount = await BalanceService.getOneBalance(id);
@@ -140,6 +164,7 @@ class ContactController {
                 return data.balance;
               }
             );
+            // console.log(dataMessage);
 
             return res.status(200).send({
               status: 200,
