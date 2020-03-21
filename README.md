@@ -1,8 +1,8 @@
 ### JemiSMS
 
-JemiSMS-Backend is Webapp API for send mass SMS for marketing. This project is composed of:
-  1.RESTful node/express API server that serves the backend functionalities of the application
-  2.The UI template (web pages) made in ReactJS that help user interact with the application.
+JemiSMS-Backend is Webapp API for send mass SMS for marketing which support MoMo(MTN). This project is composed of:
+-  1.RESTful node/express API server that serves the backend functionalities of the application
+-  2.The UI template (web pages) made in ReactJS that help user interact with the application.
 
 ### The UI(web pages) is here
 
@@ -28,7 +28,7 @@ The style-guide is ESlint-airbnb, and it uses prettier for formatting code. To e
 
 ### Clone the latest version of the repository
 
-`git@github.com:olivierhabi/PROJECT_11-Backend.git` or `https://github.com/olivierhabi/PROJECT_11-Backend.git`
+`git@github.com:olivierhabi/JemiSMS-Backend.git` or `https://github.com/olivierhabi/JemiSMS-Backend.git`
 
 ### Change directory
 
@@ -54,3 +54,38 @@ After setting up the database,
 
 `yarn start`
 
+## API Spec
+
+`POST /api/users`: Register a user.
+
+`POST /api/auth/signin`: User can Login.
+
+`GET /api/account`: Loged in User can get his info
+
+`POST /api/contact`: User can save contact.
+
+`GET /api/contact`: User can view saved contact.
+
+`DELETE /api/contact/{id}`: User can delete saved contact.
+
+`PATCH /api/contact/{id}`: User can edit saved contact.
+
+`POST /api/message`: User can send SMS.
+
+`GET /api/message`: User view can his/her sent SMS.
+
+`DELETE /api/message/{id}`: User can delete send SMS.
+
+`POST /api/pay`: User can request payment via Mobile Money(MTN).
+
+`POST /api/balance`: User can increase his/her balance via MoMo(MTN).
+
+`GET /api/balance`: User can check his/her Balance.
+
+`GET /api/history`: User can check his/her account history.
+
+`GET /api/users`: User can check his/her account Information.
+
+`POST /api/users`: User can update his/her account Information.
+
+`POST /api/schedule`: User can schedule SMS to be sent in specific time.
