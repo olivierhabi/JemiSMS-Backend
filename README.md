@@ -89,3 +89,11 @@ After setting up the database,
 `POST /api/users`: User can update his/her account Information.
 
 `POST /api/schedule`: User can schedule SMS to be sent in specific time.
+
+## Licence
+
+[MIT licence](https://github.com/olivierhabi/JemiSMS-Backend/blob/master/LICENSE.md)
+
+
+
+
