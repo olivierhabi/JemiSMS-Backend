@@ -51,7 +51,7 @@
     "pg-hstore": "^2.3.3",
     "python-bridge": "^1.1.0",
     "python-shell": "^1.0.8",
-    "redis": "^3.0.2",
+    "redis": "^3.1.1",
     "request": "^2.88.2",
     "sequelize": "4.42.0",
     "uuid": "^7.0.0",
